@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import random
 import string
 
 COMMON_PASSWORDS = {"123456", "password", "123456789", "qwerty", "12345", "12345678", "abc123", "password1", "1234567"}
@@ -30,6 +31,13 @@ def check_password_strength(*args):
     feedback_listbox.delete(0, tk.END)
     for condition, met in conditions.items():
         feedback_listbox.insert(tk.END, condition if met else "❌ " + condition[2:])
+
+def suggest_password():
+    digits = random.randint(10, 16)
+    password = ""
+    for i in range(1, digits):
+        password += str(chr(random.randint(33,126)))
+    password_var.set(password)
 
 
 def toggle_theme():
@@ -85,6 +93,9 @@ feedback_label.pack()
 feedback_listbox = tk.Listbox(frame, height=5, font=('Arial', 12), bg=LIGHT_FEEDBACK_BG, fg='black', bd=2, relief='solid', highlightthickness=0, selectbackground='#cccccc')
 feedback_listbox.pack(pady=5, padx=10, fill='x')
 
+suggest_button = tk.Button(frame, text='Suggest Password', command=suggest_password, font=('Arial', 14), bg='#ffffff', fg='black', relief='flat', padx=12, pady=8, width=20)
+suggest_button.pack(pady=10)
+
 toggle_button = tk.Button(frame, text='Switch to Dark Mode', command=toggle_theme, font=('Arial', 14), bg='#ffffff', fg='black', relief='flat', padx=12, pady=8, width=20)
 toggle_button.pack(pady=10)
 
@@ -101,3 +112,5 @@ root.config(bg=THEMES[current_theme]["bg"])
 frame.config(bg=THEMES[current_theme]["bg"])
 
 root.mainloop()
+
+
